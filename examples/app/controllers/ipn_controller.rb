@@ -10,7 +10,6 @@ class IpnController < ApplicationController
   STATUS_SUCCESS_CODE = "001"
 
   def post
-
     if ((params["api_key"]==API_KEY and params["api_signature"]==API_SIGNATURE))
       api_type = params["api_type"]
       Rails.logger.debug("Request data #{params}")
@@ -36,7 +35,9 @@ class IpnController < ApplicationController
           "transaction_status_description" => "Transaction received",
           "transaction_custom_sms" => "Payment to A/C #{transaction_account_number} via #{transaction_method} transaction #{transaction_reference} has been received. Thankyou!"
         }
+        
         render :json => response
+      
       elsif (api_type=ACTION_ACKNOWLEDGE)
         # Lipisha acknowledges the transaction
         # At this point we can update our records confirming that the cash has actually been received.
